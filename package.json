@@ -30,6 +30,7 @@
     "minimist": "^1.2.0",
     "node-reset-scss": "^1.0.1",
     "raf": "^3.2.0",
+    "three": "^0.79.0",
     "three-obj-loader": "^1.0.2",
     "three-vive-controller": "^1.0.2",
     "vinyl-source-stream": "^1.1.0"
