@@ -103,3 +103,5 @@ var WEBVR = {
 	}
 
 };
+
+module.exports = WEBVR;
