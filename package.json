@@ -16,7 +16,7 @@
     "eventemitter3": "^1.2.0",
     "gsap": "^1.18.5",
     "stats.js": "mrdoob/stats.js",
-    "three": "^0.78.0"
+    "three": "^0.79.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
