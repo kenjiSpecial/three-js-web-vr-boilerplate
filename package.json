@@ -10,10 +10,12 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
+    "control-panel": "^1.2.0",
     "dat-gui": "^0.5.0",
     "domready": "^1.0.8",
     "eventemitter3": "^1.2.0",
     "gsap": "^1.18.5",
+    "stats.js": "mrdoob/stats.js",
     "three": "^0.78.0"
   },
   "devDependencies": {

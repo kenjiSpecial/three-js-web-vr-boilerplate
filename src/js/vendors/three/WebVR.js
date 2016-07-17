@@ -3,8 +3,8 @@
  * Based on @tojiro's vr-samples-utils.js
  */
 
-module.exports = {
-	
+var WEBVR = {
+
 	isLatestAvailable: function () {
 
 		return navigator.getVRDisplays !== undefined;
