@@ -46,7 +46,8 @@ module.exports = function(THREE, packageRoot) {
             var model = object.children[0]
             model.material.map = loader.load(packageRoot + 'assets/onepointfive_texture.png')
             model.material.specularMap = loader.load(packageRoot + 'assets/onepointfive_spec.png')
-            model.material.color = new THREE.Vector3(1, 1, 1);
+            if(controllerId == 0) model.material.color = new THREE.Vector3(1, 0, 0);
+            else model.material.color = new THREE.Vector3(1, 1, 1);
 
             this.add(object)
         }.bind(this))

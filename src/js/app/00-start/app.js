@@ -43,6 +43,7 @@ function init() {
         window.innerWidth / window.innerHeight,
         0.1, 100)
     camera.position.z = 0
+    scene.add(camera)
 
     material = new THREE.ShaderMaterial({
         uniforms: {

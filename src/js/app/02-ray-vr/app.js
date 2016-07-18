@@ -1,81 +1,1 @@
-"use strict";
-window.THREE = require('three');
-const WEBVR = require('../../vendors/three/WebVR');
-require('../../vendors/three/effects/VREffect');
-require('../../vendors/three/controls/VRControls');
-var ViveController = require('../../vendors/three/custom-three-vive-controller/index')(THREE, './');
-
-
-const glslify = require('glslify');
-const raf = require('raf');
-
-var clock = new THREE.Clock();
-var scene, camera, room, controls, container, renderer, controller1, controller2, effect;
-
-require('domready')(() => {
-    init();
-    loop()
-});
-
-function init() {
-    container = document.createElement( 'div' );
-    document.body.appendChild( container );
-
-    scene = new THREE.Scene();
-
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 10 );
-    scene.add( camera );
-
-    room = new THREE.Mesh(
-        new THREE.BoxGeometry( 6, 6, 6, 8, 8, 8 ),
-        new THREE.MeshBasicMaterial( { color: 0x404040, wireframe: true } )
-    );
-
-
-    scene.add( room );
-
-    scene.add( new THREE.HemisphereLight( 0x606060, 0x404040 ) );
-
-    renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setClearColor( 0x505050 );
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.sortObjects = false;
-    container.appendChild( renderer.domElement );
-
-    controls = new THREE.VRControls( camera );
-    controls.standing = true;
-
-    controller1 = new ViveController(0, controls);
-    scene.add(controller1);
-
-
-    controller2 = new ViveController(1, controls);
-    scene.add(controller2);
-    effect = new THREE.VREffect(renderer);
-
-    if (WEBVR.isAvailable() === true) {
-
-        document.body.appendChild(WEBVR.getButton(effect));
-
-    }
-
-    window.addEventListener('resize', onWindowResize, false);
-
-}
-
-function onWindowResize() {
-
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    effect.setSize(window.innerWidth, window.innerHeight);
-}
-
-function loop() {
-  raf(loop);
-
-    controls.update();
-
-    effect.render(scene, camera);
-}
+"use strict";window.THREE = require('three');const WEBVR = require('../../vendors/three/WebVR');require('../../vendors/three/effects/VREffect');require('../../vendors/three/controls/VRControls');var ViveController = require('../../vendors/three/custom-three-vive-controller/index')(THREE, './');const glslify = require('glslify');const raf = require('raf');var clock = new THREE.Clock();var scene, camera, room, controls, container, renderer, controller1, controller2, effect;var line, deMesh;var worldScaled = 1 / 100;var cubeArr = [];var originDirection = new THREE.Vector3(0, 0.00, -50 * worldScaled)var lineGeo;require('domready')(() => {    init();    loop()});function init() {    container = document.createElement( 'div' );    document.body.appendChild( container );    scene = new THREE.Scene();    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 100 );    scene.add( camera );    room = new THREE.Mesh(        new THREE.BoxGeometry( 6, 6, 6, 8, 8, 8 ),        new THREE.MeshBasicMaterial( { color: 0x404040, wireframe: true } )    );    scene.add( room );    scene.add( new THREE.HemisphereLight( 0x606060, 0x404040 ) );    renderer = new THREE.WebGLRenderer({antialias: true});    renderer.setClearColor( 0x505050 );    renderer.setPixelRatio( window.devicePixelRatio );    renderer.setSize( window.innerWidth, window.innerHeight );    renderer.sortObjects = false;    container.appendChild( renderer.domElement );    controls = new THREE.VRControls( camera );    controls.standing = true;    controller1 = new ViveController(0, controls);    scene.add(controller1);    var axisHelper = new THREE.AxisHelper( 0.1 );    controller1.add(axisHelper)    var light = new THREE.DirectionalLight( 0xffffff );    light.position.set( 1, 1, 1 ).normalize();    scene.add( light );    var geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);    for(var ii = 0; ii < 100; ii++){        var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );        object.position.x = Math.random() * 4 - 2;        object.position.y = Math.random() * 4 - 2;        object.position.z = Math.random() * 4 - 2;        object.rotation.x = Math.random() * 2 * Math.PI;        object.rotation.y = Math.random() * 2 * Math.PI;        object.rotation.z = Math.random() * 2 * Math.PI;        var randomScale = 0.5 * Math.random();        object.scale.set(randomScale, randomScale, randomScale);        scene.add(object);        cubeArr.push(object);    }    controller2 = new ViveController(1, controls);    scene.add(controller2);    effect = new THREE.VREffect(renderer);    var deMeshGeo = new THREE.BoxGeometry(6 * worldScaled, 6 * worldScaled, 6 * worldScaled);    deMesh = new THREE.Mesh(deMeshGeo, new THREE.MeshBasicMaterial({color : 0xffffff}));    scene.add(deMesh);    lineGeo = new THREE.Geometry();    lineGeo.vertices.push(new THREE.Vector3(0, 0, 0));    lineGeo.vertices.push(new THREE.Vector3(0, 0.00, -5 * worldScaled));    line = new THREE.Line(lineGeo, new THREE.MeshBasicMaterial({color: 0x0000ff, side : THREE.DoubleSide}));    scene.add(line);    if (WEBVR.isAvailable() === true) {        document.body.appendChild(WEBVR.getButton(effect));    }    window.addEventListener('resize', onWindowResize, false);}function onWindowResize() {    camera.aspect = window.innerWidth / window.innerHeight;    camera.updateProjectionMatrix();    effect.setSize(window.innerWidth, window.innerHeight);}function loop() {    raf(loop);    var mat = controller1.matrix;    var matElements = mat.elements;    var xx1 = matElements[12];    var yy1 = matElements[13];    var zz1 = matElements[14];    var originVertice = new THREE.Vector3(xx1, yy1, zz1);    var direction = new THREE.Vector3().copy(originDirection).applyMatrix4(controller1.matrix); //.applyQuaternion(controller1.quaternion).add(originVertice);    line.geometry.vertices[0] = originVertice;    line.geometry.vertices[1] = direction;    line.geometry.verticesNeedUpdate = true;    line.frustumCulled = false;    controls.update();    effect.render(scene, camera);}

@@ -59,3 +59,7 @@ npm run
 ## License
 
 MIT, see [LICENSE.md](http://github.com/mattdesl/budo-gulp-starter/blob/master/LICENSE.md) for details.
+
+
+## ref
+- [Mesh suddenly disappears in three.js. Clipping?](http://stackoverflow.com/questions/21184061/mesh-suddenly-disappears-in-three-js-clipping)
