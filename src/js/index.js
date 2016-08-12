@@ -1,8 +1,7 @@
+"use strict";
+import App from "./app/app";
 
-
-require('./app/00-boilerplate-cardboard/app');
-
-// require('./app/00-start/app');
-//require('./app/01-ray/app');
-// require('./app/01-raycaster/app');
-//require('./app/02-ray-vr/app');
+require('domready')(() => {
+    var app = new App();
+    app.start()
+});

@@ -1,0 +1,13 @@
+configCallback({
+    "manifest": {
+        "json": {
+            "site": "data/site.json"
+        },
+        "images": [
+
+        ],
+        "videos": [
+
+        ]
+    }
+})
