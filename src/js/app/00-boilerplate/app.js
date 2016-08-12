@@ -13,8 +13,17 @@ var clock = new THREE.Clock();
 var scene, camera, room, controls, container, renderer, controller1, controller2, effect;
 var scaled = 1/100;
 require('domready')(() => {
-    init();
-    loop()
+    if ( WEBVR.isLatestAvailable() === false ) {
+        
+        document.body.appendChild( WEBVR.getMessage() );
+        // InitializeWebVRPolyfill();
+        // init();
+        // loop();
+    }else{
+        init();
+        loop();
+    }
+    
 });
 
 function init() {
