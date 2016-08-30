@@ -16,7 +16,7 @@ export default class Loader extends THREE.Scene {
         this.loadEvents = 0;
         this.loaded = 0;
     
-        this.add(camera);
+        // this.add(camera);
         
         _.bindAll(this, 'onLoadedConfigJson')
     }
@@ -34,7 +34,7 @@ export default class Loader extends THREE.Scene {
         var images = manifest.images;
     
     
-    
+        // image loader
         this.imagesProgress = 0;
         var imagesLoader = new ImagesLoader(AppMan.assetsURL);
         this.imagesLoader = imagesLoader;
@@ -80,6 +80,17 @@ export default class Loader extends THREE.Scene {
         AppMan.data = _.extend(AppMan.data, this.jsonLoader.data);
         AppMan.images = this.imagesLoader.images;
         
+        // create texture
+        AppMan.textures = {};
+    
+        _.forEach(AppMan.images, function(image, key) {
+            var texture = new THREE.Texture(image);
+            AppMan.textures[key] = texture;
+            texture.needsUpdate = true;
+        });
+    
+        // ------------------------
+    
         this.onLoaded();
     }
     onProgress(){

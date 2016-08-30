@@ -39,6 +39,11 @@ export default class ImagesLoader extends EventEmitter {
 	    this.emit('load', this.images);
         
     }
+    
+    onImageError(image, error){
+        clearImage(image);
+        this.emit('load', error);
+    }
 	
 };
 

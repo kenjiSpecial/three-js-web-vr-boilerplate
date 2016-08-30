@@ -1,4 +1,5 @@
 "use strict";
+
 var THREE = require('three');
 var _ = require('underscore');
 var AppMan = require('./data/app-manager');
@@ -29,20 +30,18 @@ export default class App {
             isUndistorted: false // Default: false.
         };
         
-        var container = document.createElement('div');
-        document.body.appendChild(container);
-        
-        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
+        this.camera = new THREE.PerspectiveCamera(70, size.width / size.height, 0.1, 100);
         
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setClearColor(0x000);
         
         var devicePixelRatio = 1;
-        if (sniffer.isDesktop) devicePixelRatio = window.devicePixelRatio;
+        // if (sniffer.isDesktop) devicePixelRatio = window.devicePixelRatio;
         this.renderer.setPixelRatio(devicePixelRatio);
+        document.body.appendChild(this.renderer.domElement);
         
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(this.renderer.domElement);
+        this.renderer.setSize(size.width, size.height);
+        
         
         this.controls = new THREE.VRControls(this.camera);
         this.controls.standing = true;
@@ -51,6 +50,8 @@ export default class App {
         this.effect.setSize(size.width, size.height);
         
         this.manager = new WebVRManager(this.renderer, this.effect, params);
+    
+        
         
         this.clock = new THREE.Clock();
         // clock.start();
@@ -69,7 +70,6 @@ export default class App {
         
         this.scenes = {
             "loader": new Loader(this.camera),
-            "main": new Main(this.camera)
         }
         
         AppMan.scene = "loader";
@@ -77,12 +77,16 @@ export default class App {
         
         
         size.addListener(this.onWindowResize);
+        this.onWindowResize();
         window.addEventListener('vrdisplaypresentchange', this.onWindowResize, true);
-        
+    
+        window.camera =  this.camera;
     }
     
     start() {
         if (this.scene == "loader") this.startLoadAssets();
+        
+        
         
         
         this.clock.start();
@@ -97,6 +101,13 @@ export default class App {
     }
     
     onLoaded() {
+        // create all scenes after having loaded assets
+        
+        _.extend(this.scenes, {
+            "main": new Main(this.camera)
+        });
+    
+        
         AppMan.scene = "main";
         this.scene = AppMan.scene;
         
@@ -113,10 +124,12 @@ export default class App {
     }
     
     onWindowResize() {
-        effect.setSize(size.width, size.height);
         
-        camera.aspect = size.width / size.height;
-        camera.updateProjectionMatrix();
+        this.effect.setSize(size.width, size.height);
+
+        this.camera.aspect = size.width / size.height;
+        this.camera.updateProjectionMatrix();
+        
     }
     
 }
