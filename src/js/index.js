@@ -32,8 +32,9 @@ window.WebVRConfig = {
     //DIRTY_SUBMIT_FRAME_BINDINGS: true // default: false
 };
 
-require('./vendors/webvr/webvr-manager');
-require('./vendors/webvr/webvr-polyfill');
+require('./vendors/webvr-manager/webvr-manager');
+// require('./vendors/webvr/webvr-polyfill');
+require('webvr-polyfill');
 
 import App from "./app/app";
 

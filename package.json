@@ -20,7 +20,7 @@
     "sniffer": "watsondg/sniffer",
     "stats.js": "mrdoob/stats.js",
     "three": "^0.80.1",
-    "webvr-polyfill": "^0.9.15"
+    "webvr-polyfill": "^0.9.18"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
@@ -47,7 +47,7 @@
     "open": "gulp watch --open",
     "start": "gulp watch",
     "build": "gulp bundle --production",
-    "build-manager": "browserify src/js/vendors/webvr-manager/main.js | derequire > app/js/webvr-manager.js",
+    "build-manager": "browserify src/js/vendors/webvr-manager/main.js | derequire > src/js/webvr-manager.js",
     "watch-manager": "watchify src/js/vendors/webvr-manager/main.js -v -d -o 'derequire > app/js/webvr-manager.js'"
   },
   "keywords": [

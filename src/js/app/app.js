@@ -2,7 +2,9 @@
 
 var THREE = require('three');
 var _ = require('underscore');
+
 var AppMan = require('./data/app-manager');
+var WebVRManager = require('../vendors/webvr-manager/webvr-manager');
 
 var size = require('size');
 var sniffer = require('sniffer')
