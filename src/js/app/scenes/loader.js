@@ -82,11 +82,15 @@ export default class Loader extends THREE.Scene {
         
         // create texture
         AppMan.textures = {};
-    
+        
         _.forEach(AppMan.images, function(image, key) {
-            var texture = new THREE.Texture(image);
-            AppMan.textures[key] = texture;
-            texture.needsUpdate = true;
+            if(key.indexOf("texture") > 0){
+                console.log(key);
+                var texture = new THREE.Texture(image);
+                AppMan.textures[key] = texture;
+                texture.needsUpdate = true;
+            }
+            
         });
     
         // ------------------------

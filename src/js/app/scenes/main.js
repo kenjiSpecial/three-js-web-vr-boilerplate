@@ -7,9 +7,8 @@ export default class MainScene extends THREE.Scene {
 	constructor(camera){
 		super();
 		
-		this.add(camera)
+		this.add(camera);
 		
-		var boxSize = 5;
 		var texture = AppMan.textures['img/box.png'];
 		
 		texture.wrapS = THREE.RepeatWrapping;
@@ -26,6 +25,10 @@ export default class MainScene extends THREE.Scene {
 		// skybox.position.y = boxSize/2;
 		this.add(skybox)
 		
+		/**
+		var boxSize = 5;
+		
+		
 		
 		var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
 		var material = new THREE.MeshNormalMaterial();
@@ -33,7 +36,8 @@ export default class MainScene extends THREE.Scene {
 
 		cube.position.set(0, 0, 0);
 
-		this.add(cube);
+		this.add(cube); */
+		
 		
 		
 	}

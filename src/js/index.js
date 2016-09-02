@@ -33,7 +33,6 @@ window.WebVRConfig = {
 };
 
 require('./vendors/webvr-manager/webvr-manager');
-// require('./vendors/webvr/webvr-polyfill');
 require('webvr-polyfill');
 
 import App from "./app/app";
