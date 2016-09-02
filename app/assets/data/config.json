@@ -4,7 +4,7 @@ configCallback({
             "site": "data/site.json"
         },
         "images": [
-            "img/textures/box.png"
+            "images/textures/box.png"
         ],
         "videos": [
 

@@ -17,6 +17,10 @@ const babelify = require('babelify').configure({
 
 const entry = './src/js/index.js'
 const outfile = 'bundle.js'
+const opts = require('./gulp/options');
+const project = require('./project.json');
+const paths = project.env[opts.env];
+var envify = require('envify/custom');
 
 
 //our CSS pre-processor
@@ -44,7 +48,12 @@ gulp.task('watch', ['sass'], function(cb) {
     browserify: {
       transform:[
         babelify,   //browserify transforms
-        glslify
+        glslify,
+        envify({
+          "ENV" : opts.env,
+          "BASE_URL" : paths.baseUrl,
+          "ASSETS_URL" : paths.assetsUrl
+        })
       ]
     }
   }).on('exit', cb)
@@ -52,7 +61,7 @@ gulp.task('watch', ['sass'], function(cb) {
 
 //the distribution bundle task
 gulp.task('bundle', ['sass'], function() {
-  var bundler = browserify(entry, { transform: [babelify, glslify] })
+  var bundler = browserify(entry, { transform: [babelify, glslify, envify({"ENV" : opts.env, "BASE_URL" : paths.baseUrl, "ASSETS_URL" : paths.assetsUrl})] })
         .bundle()
   return bundler
     .pipe(source('index.js'))

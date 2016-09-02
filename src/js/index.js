@@ -1,5 +1,15 @@
 "use strict";
 
+import App from './lib/app';
+
+App.configure({
+    env: process.env.ENV,
+    baseURL: process.env.BASE_URL,
+    assetsURL: process.env.ASSETS_URL,
+})
+
+
+
 window.WebVRConfig = {
     /**
      * webvr-polyfill configuration
@@ -35,9 +45,9 @@ window.WebVRConfig = {
 require('./vendors/webvr-manager/webvr-manager');
 require('webvr-polyfill');
 
-import App from "./app/app";
+import GLApp from "./gl-app/index";
 
 require('domready')(() => {
-    var app = new App();
-    app.start()
+    var glApp = new GLApp();
+    glApp.start()
 });

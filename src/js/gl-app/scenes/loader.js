@@ -1,28 +1,28 @@
 var THREE = require('three');
 
-var AppMan = require('../data/app-manager');
+// var App = require('../data/app-manager');
 import JsonLoader from '../../lib/json-loader';
 import ImagesLoader from "../../lib/images-loader";
+import App from "../../lib/app";
 var _ = require('underscore');
 
 export default class Loader extends THREE.Scene {
     
     constructor(camera) {
         super();
-        AppMan.assetsURL = 'assets/';
         
         this.useJsonp = true;
         this.isLoaded = false;
         this.loadEvents = 0;
         this.loaded = 0;
-    
+        
         // this.add(camera);
         
         _.bindAll(this, 'onLoadedConfigJson')
     }
     
     startLoad() {
-        this.configJsonLoader = new JsonLoader(AppMan.assetsURL, this.useJsonp);
+        this.configJsonLoader = new JsonLoader(App.assetsURL, this.useJsonp);
         this.configJsonLoader.on("load", this.onLoadedConfigJson);
         this.configJsonLoader.load({'config': 'data/config.json'});
         
@@ -30,13 +30,13 @@ export default class Loader extends THREE.Scene {
     
     onLoadedConfigJson() {
         var manifest = this.configJsonLoader.data.config.manifest;
-        var json   = manifest.json;
+        var json = manifest.json;
         var images = manifest.images;
-    
-    
+        
+        
         // image loader
         this.imagesProgress = 0;
-        var imagesLoader = new ImagesLoader(AppMan.assetsURL);
+        var imagesLoader = new ImagesLoader(App.assetsURL);
         this.imagesLoader = imagesLoader;
         if (images && images.length) {
             imagesLoader.on('progress', this.onImagesProgress, this);
@@ -46,10 +46,10 @@ export default class Loader extends THREE.Scene {
             this.loadEvents++;
             // console.log('[Loader] Loading images...');
         }
-    
+        
         // Json loader
         this.jsonProgress = 0;
-        var jsonLoader = new JsonLoader(AppMan.assetsURL, this.useJsonp);
+        var jsonLoader = new JsonLoader(App.assetsURL, this.useJsonp);
         this.jsonLoader = jsonLoader;
         if (json && _.keys(json).length) {
             jsonLoader.on('progress', this.onJsonProgress, this);
@@ -61,49 +61,52 @@ export default class Loader extends THREE.Scene {
         }
     }
     
-    onJsonProgress (progress) {
+    onJsonProgress(progress) {
         this.jsonProgress = progress;
         
         this.onProgress();
     }
     
-    onError(){
+    onError() {
         
     }
     
-    onLoad(from){
+    onLoad(from) {
         this.loaded++;
+        console.log(from);
         this.onProgress();
         
         if (this.loaded < this.loadEvents) return;
-    
-        AppMan.data = _.extend(AppMan.data, this.jsonLoader.data);
-        AppMan.images = this.imagesLoader.images;
+        
+        App.data = _.extend(App.data, this.jsonLoader.data);
+        App.images = this.imagesLoader.images;
         
         // create texture
-        AppMan.textures = {};
+        App.textures = {};
         
-        _.forEach(AppMan.images, function(image, key) {
-            if(key.indexOf("texture") > 0){
-                console.log(key);
+        _.forEach(App.images, function (image, key) {
+            if (key.indexOf('textures') > 0) {
+                key = key.replace('images/textures/', '');
                 var texture = new THREE.Texture(image);
-                AppMan.textures[key] = texture;
+                App.textures[key] = texture;
                 texture.needsUpdate = true;
             }
-            
         });
-    
+        
         // ------------------------
-    
+        
         this.onLoaded();
     }
-    onProgress(){
+    
+    onProgress() {
         this.loadedProgress = ((this.jsonProgress + this.imagesProgress) / (this.loadEvents)) * 100;
     }
-    onLoaded(){
+    
+    onLoaded() {
         this.isLoaded = true;
         this.dispatchEvent({type: 'loaded'});
     }
+    
     loop() {
         
     }
