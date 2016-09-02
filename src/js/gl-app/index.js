@@ -35,6 +35,8 @@ export default class GLApp {
         this.camera = new THREE.PerspectiveCamera(70, size.width / size.height, 0.1, 100);
         
         this.renderer = new THREE.WebGLRenderer({antialias: true});
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;//THREE.BasicShadowMap;
         this.renderer.setClearColor(0x000);
         
         var devicePixelRatio = 1;
@@ -77,11 +79,10 @@ export default class GLApp {
         App.page = "loader";
         
         
+        
         size.addListener(this.onWindowResize);
         this.onWindowResize();
         window.addEventListener('vrdisplaypresentchange', this.onWindowResize, true);
-        
-        window.camera = this.camera;
     }
     
     start() {
@@ -96,6 +97,7 @@ export default class GLApp {
     }
     
     startLoadAssets() {
+        this.scenes[App.page].animateIn();
         this.scenes[App.page].startLoad();
         this.scenes[App.page].addEventListener('loaded', this.onLoaded)
     }
@@ -106,7 +108,9 @@ export default class GLApp {
             "main": new Main(this.camera)
         });
     
+        
         App.page = "main";
+        this.scenes[App.page].animateIn();
     }
     
     loop() {
@@ -115,6 +119,8 @@ export default class GLApp {
         if (this.stats) this.stats.update();
         
         var delta = this.clock.getDelta();
+        
+        curScene.loop(dt);
         
         this.controls.update();
         this.manager.render(curScene, this.camera, delta * 1000);

@@ -1,12 +1,13 @@
 var THREE = require('three');
+var _ = require('underscore');
 
-// var App = require('../data/app-manager');
 import JsonLoader from '../../lib/json-loader';
 import ImagesLoader from "../../lib/images-loader";
 import App from "../../lib/app";
-var _ = require('underscore');
+import AbstractBase from "./abstract-base";
 
-export default class Loader extends THREE.Scene {
+
+export default class Loader extends AbstractBase {
     
     constructor(camera) {
         super();
