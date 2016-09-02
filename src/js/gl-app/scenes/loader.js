@@ -73,7 +73,6 @@ export default class Loader extends THREE.Scene {
     
     onLoad(from) {
         this.loaded++;
-        console.log(from);
         this.onProgress();
         
         if (this.loaded < this.loadEvents) return;
