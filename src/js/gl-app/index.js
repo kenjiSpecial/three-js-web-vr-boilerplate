@@ -3,7 +3,7 @@
 var THREE = require('three');
 var _ = require('underscore');
 
-var AppMan = require('./data/app-manager');
+import App from "../lib/app";
 var WebVRManager = require('../vendors/webvr-manager/webvr-manager');
 
 var size = require('size');
@@ -24,7 +24,7 @@ import Loader from "./scenes/loader";
 import Main from "./scenes/main";
 
 
-export default class App {
+export default class GLApp {
     constructor() {
         _.bindAll(this, 'onWindowResize', 'loop', 'onLoaded');
         var params = {
@@ -52,7 +52,7 @@ export default class App {
         this.effect.setSize(size.width, size.height);
         
         this.manager = new WebVRManager(this.renderer, this.effect, params);
-    
+        
         
         
         this.clock = new THREE.Clock();
@@ -74,20 +74,18 @@ export default class App {
             "loader": new Loader(this.camera),
         }
         
-        AppMan.scene = "loader";
-        this.scene = AppMan.scene;
+        App.page = "loader";
         
         
         size.addListener(this.onWindowResize);
         this.onWindowResize();
         window.addEventListener('vrdisplaypresentchange', this.onWindowResize, true);
-    
-        window.camera =  this.camera;
+        
+        window.camera = this.camera;
     }
     
     start() {
-        if (this.scene == "loader") this.startLoadAssets();
-        
+        if (App.page == "loader") this.startLoadAssets();
         
         
         
@@ -98,25 +96,22 @@ export default class App {
     }
     
     startLoadAssets() {
-        this.scenes[this.scene].startLoad();
-        this.scenes[this.scene].addEventListener('loaded', this.onLoaded)
+        this.scenes[App.page].startLoad();
+        this.scenes[App.page].addEventListener('loaded', this.onLoaded)
     }
     
     onLoaded() {
         // create all scenes after having loaded assets
-        
         _.extend(this.scenes, {
             "main": new Main(this.camera)
         });
     
-        
-        AppMan.scene = "main";
-        this.scene = AppMan.scene;
-        
+        App.page = "main";
     }
     
     loop() {
-        var curScene = this.scenes[this.scene];
+        var curScene = this.scenes[App.page];
+        
         if (this.stats) this.stats.update();
         
         var delta = this.clock.getDelta();
@@ -128,7 +123,7 @@ export default class App {
     onWindowResize() {
         
         this.effect.setSize(size.width, size.height);
-
+        
         this.camera.aspect = size.width / size.height;
         this.camera.updateProjectionMatrix();
         
