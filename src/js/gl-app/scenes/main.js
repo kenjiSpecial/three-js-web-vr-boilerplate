@@ -42,16 +42,16 @@ export default class MainScene extends AbstractBase {
         texture.wrapT = THREE.RepeatWrapping;
         texture.repeat.set(boxSize, boxSize);
         
-        this.add(new THREE.AmbientLight(0x3D4143));
-        var light = new THREE.DirectionalLight(0xffffff, 1.4);
-        light.position.set(3, 4, 5);
+        this.add(new THREE.AmbientLight(0xffffff));
+        var light = new THREE.DirectionalLight(0xffffff, 0.1);
+        light.position.set(0, 30, 0);
         light.target.position.set(0, 0, 0);
         light.castShadow = true;
-        light.shadow.camera.near = 500;
-        light.shadow.camera.far = 1600;
+        light.shadow.camera.near = 0.1;
+        light.shadow.camera.far = 100;
         light.shadow.camera.fov = 70;
         light.shadow.bias = 0.0001;
-        light.shadow.darkness = 0.7;
+        light.shadow.darkness = 0.1;
         //light.shadowCameraVisible = true;
         light.shadow.mapWidth = light.shadow.mapHeight = 1024;
         
@@ -71,7 +71,7 @@ export default class MainScene extends AbstractBase {
         });
         var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
         this.add(skybox)
-
+        //
         
         this.sphereMat = new  THREE.MeshPhongMaterial( {shininess: 10, map: basicTexture(0), name:'sph' } );
         this.groundMat = new THREE.MeshPhongMaterial( {shininess: 10, color:0x3D4143, transparent:true, opacity:1, side : THREE.DoubleSide } );

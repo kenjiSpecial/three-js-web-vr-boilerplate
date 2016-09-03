@@ -35,10 +35,12 @@ export default class GLApp {
         this.camera = new THREE.PerspectiveCamera(70, size.width / size.height, 0.1, 100);
         
         this.renderer = new THREE.WebGLRenderer({antialias: true});
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFShadowMap;//THREE.BasicShadowMap;
         this.renderer.setClearColor(0x000);
-        
+    
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    
+    
         var devicePixelRatio = 1;
         // if (sniffer.isDesktop) devicePixelRatio = window.devicePixelRatio;
         this.renderer.setPixelRatio(devicePixelRatio);
