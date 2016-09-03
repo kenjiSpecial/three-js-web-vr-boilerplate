@@ -10,7 +10,6 @@ var size = require('size');
 var sniffer = require('sniffer')
 var Stats = require('stats.js');
 
-var IS_DEBUG = !!require('../lib/utils').getQueryVariable("debug");
 
 require('../vendors/three/effects/VREffect')(THREE);
 require('../vendors/three/controls/VRControls')(THREE);
@@ -58,9 +57,9 @@ export default class GLApp {
         this.clock = new THREE.Clock();
         // clock.start();
         
-        if (IS_DEBUG) {
-            stats = new Stats();
-            container.appendChild(stats.dom);
+        if (App.isDebug) {
+            this.stats = new Stats();
+            document.body.appendChild(this.stats.dom);
             
             // oui({test: 100})
             gui = oui.datoui(null, _=> console.log(_))
