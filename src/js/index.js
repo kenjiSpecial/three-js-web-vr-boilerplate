@@ -2,7 +2,13 @@
 
 import App from './lib/app';
 
+var isDebug;
+if(process.env.ENV == "dev" && !!require('./lib/utils').getQueryVariable("debug")) isDebug = true;
+else                                                                               isDebug = false;
+
+
 App.configure({
+    isDebug : isDebug,
     env: process.env.ENV,
     baseURL: process.env.BASE_URL,
     assetsURL: process.env.ASSETS_URL,
@@ -41,6 +47,7 @@ window.WebVRConfig = {
     // Warning: enabling this might lead to rendering issues.
     //DIRTY_SUBMIT_FRAME_BINDINGS: true // default: false
 };
+
 
 require('./vendors/webvr-manager/webvr-manager');
 require('webvr-polyfill');
