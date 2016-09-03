@@ -42,7 +42,7 @@ gulp.task('watch', ['sass'], function(cb) {
   budo(entry, {
     serve: 'bundle.js',     // end point for our <script> tag
     stream: process.stdout, // pretty-print requests
-    live: false,             // live reload & CSS injection
+    live: true,             // live reload & CSS injection
     dir: 'app',             // directory to serve
     open: argv.open,        // whether to open the browser
     browserify: {
