@@ -1,8 +1,10 @@
 "use strict";
 
-import THREE from "three";
+// import THREE from "three/src/Three";
+var THREE = require('three');
 
-export class AbstructScene extends THREE.Scene {
+
+export default class AbstructScene extends THREE.Scene {
     constructor() {
         super();
         

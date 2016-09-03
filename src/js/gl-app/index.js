@@ -120,7 +120,7 @@ export default class GLApp {
         
         var delta = this.clock.getDelta();
         
-        curScene.loop(dt);
+        curScene.loop(delta);
         
         this.controls.update();
         this.manager.render(curScene, this.camera, delta * 1000);
