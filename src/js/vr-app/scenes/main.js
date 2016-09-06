@@ -2,8 +2,9 @@
 
 var THREE = require('three');
 import App from "../../lib/app";
+import AbstractBase from "./abstract-base";
 
-export default class MainScene extends THREE.Scene {
+export default class MainScene extends AbstractBase {
     constructor(camera) {
         super();
         

@@ -55,7 +55,6 @@ export default class GLApp {
         
         
         this.clock = new THREE.Clock();
-        // clock.start();
         
         if (App.isDebug) {
             this.stats = new Stats();
@@ -95,6 +94,7 @@ export default class GLApp {
     }
     
     startLoadAssets() {
+        this.scenes[App.page].animateIn();
         this.scenes[App.page].startLoad();
         this.scenes[App.page].addEventListener('loaded', this.onLoaded)
     }
@@ -106,6 +106,7 @@ export default class GLApp {
         });
     
         App.page = "main";
+        this.scenes[App.page].animateIn();
     }
     
     loop() {

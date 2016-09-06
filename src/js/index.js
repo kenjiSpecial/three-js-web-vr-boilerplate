@@ -52,7 +52,7 @@ window.WebVRConfig = {
 require('./vendors/webvr-manager/webvr-manager');
 require('webvr-polyfill');
 
-import GLApp from "./gl-app/index";
+import GLApp from "./vr-app";
 
 require('domready')(() => {
     var glApp = new GLApp();
