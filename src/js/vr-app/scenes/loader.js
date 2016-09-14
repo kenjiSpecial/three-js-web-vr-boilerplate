@@ -8,8 +8,7 @@ import AbstractBase from "./abstract-base";
 var _ = require('underscore');
 
 export default class Loader extends AbstractBase {
-    
-    constructor(camera) {
+    constructor() {
         super();
         
         this.useJsonp = true;

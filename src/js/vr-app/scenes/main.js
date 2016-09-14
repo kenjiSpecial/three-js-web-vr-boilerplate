@@ -5,10 +5,8 @@ import App from "../../lib/app";
 import AbstractBase from "./abstract-base";
 
 export default class MainScene extends AbstractBase {
-    constructor(camera) {
+    constructor() {
         super();
-        
-        this.add(camera)
         
         var boxSize = 5;
         var texture = App.textures['box.png'];

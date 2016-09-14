@@ -69,17 +69,14 @@ export default class GLApp {
         }
         
         this.scenes = {
-            "loader": new Loader(this.camera),
+            "loader": new Loader()
         }
         
         App.page = "loader";
         
-        
         size.addListener(this.onWindowResize);
         this.onWindowResize();
         window.addEventListener('vrdisplaypresentchange', this.onWindowResize, true);
-        
-        window.camera = this.camera;
     }
     
     start() {
@@ -102,7 +99,7 @@ export default class GLApp {
     onLoaded() {
         // create all scenes after having loaded assets
         _.extend(this.scenes, {
-            "main": new Main(this.camera)
+            "main": new Main()
         });
     
         App.page = "main";
